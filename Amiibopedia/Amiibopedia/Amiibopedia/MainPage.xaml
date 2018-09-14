@@ -5,10 +5,21 @@
              x:Class="Amiibopedia.MainPage">
 
     <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+        <SearchBar
+            Placeholder="Busca tu Amiiboo"
+            ></SearchBar>
+        <ListView>
+            <ListView.ItemsSource>
+            <x:Array Type="{x:Type x:String}">
+                <x:String>Mario</x:String>
+                <x:String>Mario1</x:String>
+                <x:String>Mario2</x:String>
+                <x:String>Mario3</x:String>
+            </x:Array>
+            </ListView.ItemsSource>
+
+
+        </ListView>
     </StackLayout>
 
 </ContentPage>
