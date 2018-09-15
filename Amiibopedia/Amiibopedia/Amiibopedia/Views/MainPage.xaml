@@ -1,13 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
              xmlns:local="clr-namespace:Amiibopedia"
              x:Class="Amiibopedia.MainPage">
 
     <StackLayout>
-        <SearchBar
+        <!--<SearchBar
             Placeholder="Busca tu Amiiboo"
-            ></SearchBar>
+            x:Name="search"
+            SearchCommand="{Binding SearchCommand}"
+            SearchCommandParameter="{Binding Text, Source={x:Reference search}}">
+            
+        </SearchBar>-->
+        <autocomplete:SfAutoComplete
+            HeightRequest="40"
+            DataSource="{Binding Characters}"
+            DisplayMemberPath="name"
+            Watermark="Busca tu Amiiboo!"
+
+
+            SelectionChanged="SfAutoComplete_SelectionChanged"
+            
+            >
+            
+        </autocomplete:SfAutoComplete>
+        
         <ListView>
             <ListView.ItemsSource>
             <x:Array Type="{x:Type x:String}">
