@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
              xmlns:local="clr-namespace:Amiibopedia"
+             xmlns:behaviorsPack="clr-namespace:Xamarin.Forms.BehaviorsPack;assembly=Xamarin.Forms.BehaviorsPack"
              x:Class="Amiibopedia.MainPage">
 
     <StackLayout>
@@ -17,24 +18,65 @@
             HeightRequest="40"
             DataSource="{Binding Characters}"
             DisplayMemberPath="name"
-            Watermark="Busca tu Amiiboo!"
+            Watermark="Busca tu Amiiboo!" >
+            <autocomplete:SfAutoComplete.Behaviors>
+                <behaviorsPack:EventToCommandBehavior
+                                                EventArgsPropertyPath="Value"
+                                                EventName="SelectionChanged"
+                                                Command="{Binding SearchCommand}"
+                                                >          
 
-
-            SelectionChanged="SfAutoComplete_SelectionChanged"
-            
-            >
+                </behaviorsPack:EventToCommandBehavior>
+            </autocomplete:SfAutoComplete.Behaviors>
             
         </autocomplete:SfAutoComplete>
         
-        <ListView>
-            <ListView.ItemsSource>
+        <ListView
+            ItemsSource="{Binding Amiibos}"
+            RowHeight="250">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame
+                            BackgroundColor="White"
+                            CornerRadius="5"
+                            Margin="5"
+                            
+                            >
+                            <StackLayout>
+                                <Image                                    
+                                    HeightRequest="100"
+                                    Source="{Binding image}">
+                                    
+                                </Image>
+                                <Label
+                                    FontSize="Large"
+                                    Text="{Binding name}">
+                                    
+                                </Label>
+
+                                <Label                                    
+                                    Text="{Binding amiiboSeries, StringFormat='Amiibo Series: {0}'}">
+                                </Label>
+                                <Label                                    
+                                    Text="{Binding gameSeries, StringFormat='Game Series: {0}'}">
+                                </Label>
+                                <Label                                    
+                                    Text="{Binding type, StringFormat='Type: {0}'}">
+                                </Label>
+                            </StackLayout> 
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <!--<ListView.ItemsSource>
             <x:Array Type="{x:Type x:String}">
                 <x:String>Mario</x:String>
                 <x:String>Mario1</x:String>
                 <x:String>Mario2</x:String>
                 <x:String>Mario3</x:String>
             </x:Array>
-            </ListView.ItemsSource>
+            </ListView.ItemsSource>-->
 
 
         </ListView>

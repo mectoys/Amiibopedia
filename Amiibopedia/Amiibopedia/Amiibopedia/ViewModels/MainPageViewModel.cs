@@ -11,13 +11,24 @@ using Xamarin.Forms;
 
 namespace Amiibopedia.ViewModels
 {
-  public  class MainPageViewModel : BaseViewModels
+    public class MainPageViewModel : BaseViewModels
     {
+        private ObservableCollection<Amiibo> _amiibos;
+
         //creo una propiedad de tipo
         //ObservableCollection y que reciba de CHARACTER
         #region Properties
         public ObservableCollection<Character> Characters { get; set; }
-        public ObservableCollection<Amiibo> Amiibos { get; set; }
+        public ObservableCollection<Amiibo> Amiibos
+        {
+            get => _amiibos;
+            set
+            {
+                _amiibos = value;
+                //parte de la propiedad para la lista de los Amiibos
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand SearchCommand { get; set; }
         #endregion
@@ -26,15 +37,20 @@ namespace Amiibopedia.ViewModels
         {
             //expresion lambda
             SearchCommand =
-                new Command(async (text) =>
+                new Command(async (param) =>
                 {
-                    //$ se define cadena interpolada
-                    string url = $"http://www.amiiboapi.com/api/amiibo/?character={text}";
-                    var service =
-                    new HttpHelpers<Amiibos>();
-                    var amiibos =
-                    await service.GetRestServiceDataAsync(url);
-                    Amiibos = new ObservableCollection<Amiibo>(amiibos.amiibo);
+                    var character = param as Character;
+                    if (character != null)
+                    {
+                        //$ se define cadena interpolada
+                        string url = $"http://www.amiiboapi.com/api/amiibo/?character={character.name}";
+                        var service =
+                        new HttpHelpers<Amiibos>();
+                        var amiibos =
+                        await service.GetRestServiceDataAsync(url);
+                        Amiibos = new ObservableCollection<Amiibo>(amiibos.amiibo);
+                    }
+
                 });
         }
         #region Methods
@@ -48,7 +64,7 @@ namespace Amiibopedia.ViewModels
             var characters = await service.GetRestServiceDataAsync(url);
 
             Characters = new ObservableCollection<Character>(characters.amiibo);
-        } 
+        }
         #endregion
 
     }
