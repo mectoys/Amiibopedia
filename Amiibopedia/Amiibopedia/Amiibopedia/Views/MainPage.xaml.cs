@@ -17,7 +17,7 @@ namespace Amiibopedia
             InitializeComponent();
         }
 
-        protected override async  void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
             ViewModel = new MainPageViewModel();
@@ -26,6 +26,21 @@ namespace Amiibopedia
             this.BindingContext = ViewModel;
         }
 
-      
+        private async void ViewCell_Appearing(object sender, EventArgs e)
+        {
+            var cell = sender as ViewCell;
+            var view = cell.View;
+
+            view.TranslationX = -100;
+            view.Opacity = 0;
+
+            await Task.WhenAny<bool>
+                (
+                 view.TranslateTo(0, 0, 250, Easing.SinIn),
+                 view.FadeTo(1, 500, Easing.BounceIn)   
+                );
+            //await view.TranslateTo(0, 0, 250, Easing.SinIn);
+        }
+
     }
 }

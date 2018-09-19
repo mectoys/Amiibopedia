@@ -4,72 +4,72 @@
              xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
              xmlns:local="clr-namespace:Amiibopedia"
              xmlns:behaviorsPack="clr-namespace:Xamarin.Forms.BehaviorsPack;assembly=Xamarin.Forms.BehaviorsPack"
-             x:Class="Amiibopedia.MainPage">
+             x:Class="Amiibopedia.MainPage"
+             Title="Amiiopedia">
 
-    <StackLayout>
-        <!--<SearchBar
+    <Grid>
+        
+        <StackLayout>
+            <!--<SearchBar
             Placeholder="Busca tu Amiiboo"
             x:Name="search"
             SearchCommand="{Binding SearchCommand}"
             SearchCommandParameter="{Binding Text, Source={x:Reference search}}">
             
         </SearchBar>-->
-        <autocomplete:SfAutoComplete
+            <autocomplete:SfAutoComplete
             HeightRequest="40"
             DataSource="{Binding Characters}"
             DisplayMemberPath="name"
             Watermark="Busca tu Amiiboo!" >
-            <autocomplete:SfAutoComplete.Behaviors>
-                <behaviorsPack:EventToCommandBehavior
+                <autocomplete:SfAutoComplete.Behaviors>
+                    <behaviorsPack:EventToCommandBehavior
                                                 EventArgsPropertyPath="Value"
                                                 EventName="SelectionChanged"
                                                 Command="{Binding SearchCommand}"
-                                                >          
+                                                >
 
-                </behaviorsPack:EventToCommandBehavior>
-            </autocomplete:SfAutoComplete.Behaviors>
-            
-        </autocomplete:SfAutoComplete>
-        
-        <ListView
+                    </behaviorsPack:EventToCommandBehavior>
+                </autocomplete:SfAutoComplete.Behaviors>
+
+            </autocomplete:SfAutoComplete>
+
+            <ListView
             ItemsSource="{Binding Amiibos}"
             RowHeight="250">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Frame
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell
+                        Appearing="ViewCell_Appearing"  >
+                            <Frame
                             BackgroundColor="White"
                             CornerRadius="5"
-                            Margin="5"
-                            
-                            >
-                            <StackLayout>
-                                <Image                                    
+                            Margin="5">
+                                <StackLayout>
+                                    <Image                                    
                                     HeightRequest="100"
                                     Source="{Binding image}">
-                                    
-                                </Image>
-                                <Label
+                                    </Image>
+                                    <Label
                                     FontSize="Large"
                                     Text="{Binding name}">
-                                    
-                                </Label>
-
-                                <Label                                    
+                                    </Label>
+                                    <Label                                    
                                     Text="{Binding amiiboSeries, StringFormat='Amiibo Series: {0}'}">
-                                </Label>
-                                <Label                                    
+                                    </Label>
+                                    <Label                                    
                                     Text="{Binding gameSeries, StringFormat='Game Series: {0}'}">
-                                </Label>
-                                <Label                                    
+                                    </Label>
+                                    <Label                                    
                                     Text="{Binding type, StringFormat='Type: {0}'}">
-                                </Label>
-                            </StackLayout> 
-                        </Frame>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            <!--<ListView.ItemsSource>
+                                    </Label>
+
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <!--<ListView.ItemsSource>
             <x:Array Type="{x:Type x:String}">
                 <x:String>Mario</x:String>
                 <x:String>Mario1</x:String>
@@ -79,7 +79,21 @@
             </ListView.ItemsSource>-->
 
 
-        </ListView>
-    </StackLayout>
+            </ListView>
+        </StackLayout>
+        
+        <Grid 
+            BackgroundColor="Black"
+            IsVisible="{Binding IsBusy}"
+            Opacity=".8">
+
+            <ActivityIndicator
+                IsRunning="{Binding IsBusy}"
+                HorizontalOptions="Center">
+
+            </ActivityIndicator>
+        </Grid>
+    </Grid>
+ 
 
 </ContentPage>

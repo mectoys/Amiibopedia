@@ -2,10 +2,10 @@
 
 namespace Amiibopedia.ViewModels
 {
-
     using System;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
+
 
     //como parte de la programacion el xamarin forms se debe de crear
     //un clase base para propositos de uso diverso.
@@ -22,6 +22,9 @@ namespace Amiibopedia.ViewModels
         #endregion
 
         #region Properties
+        //esta propiedad sirve para identificar
+        //que se esta creando alguna tarea y mostrar
+        //algun tipo de retroalimentacion al user.
 
         public bool IsBusy
         {
